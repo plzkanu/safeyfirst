@@ -12,11 +12,16 @@
 
 ## 기술 스택
 
-### 프론트엔드
+### 웹 프론트엔드
 - React
 - React Router
 - Axios
 - Material-UI (모바일 친화적)
+
+### 모바일 앱
+- React Native
+- Expo Router (탭 기반 네비게이션)
+- lucide-react-native (아이콘)
 
 ### 백엔드
 - Node.js
@@ -28,19 +33,23 @@
 ## 설치 방법
 
 ```bash
-# 모든 의존성 설치
+# 모든 의존성 설치 (웹 + 모바일)
 npm run install-all
 
-# 개발 서버 실행 (프론트엔드 + 백엔드)
+# 웹 개발 서버 실행 (프론트엔드 + 백엔드)
 npm run dev
+
+# 모바일 앱 실행
+npm run mobile
 ```
 
 ## 프로젝트 구조
 
 ```
 safe/
-├── client/          # React 프론트엔드
+├── client/          # React 웹 프론트엔드
 ├── server/          # Node.js 백엔드
+├── mobile/          # React Native 모바일 앱 (Expo Router)
 ├── package.json
 └── README.md
 ```
@@ -82,9 +91,36 @@ SOOSAN 로고 이미지를 추가하려면:
    - 사용자 관리
    - 다양한 차트와 그래프를 통한 데이터 시각화
 
-## 모바일 지원
+## 모바일 앱
 
-이 애플리케이션은 모바일 기기에서도 최적화되어 있습니다:
+Expo Router를 사용한 네이티브 모바일 앱이 포함되어 있습니다:
+
+### 탭 구조
+- **홈 (Dashboard)**: 대시보드 및 주요 정보
+- **점검 (Inspection)**: 안전 점검 및 설비 점검 기록
+- **신고 (Report)**: 안전 사고 및 이상 상황 신고
+- **설정 (Settings)**: 애플리케이션 설정
+
+### 실행 방법
+```bash
+# 모바일 앱 개발 서버 시작
+npm run mobile
+
+# Android 실행
+npm run mobile:android
+
+# iOS 실행 (macOS 필요)
+npm run mobile:ios
+
+# Web 실행
+npm run mobile:web
+```
+
+자세한 내용은 `mobile/README.md`를 참고하세요.
+
+## 웹 모바일 지원
+
+웹 애플리케이션도 모바일 기기에서 최적화되어 있습니다:
 - 반응형 디자인
 - 터치 친화적 UI
 - 모바일 브라우저에서 PWA로 설치 가능
