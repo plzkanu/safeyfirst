@@ -1,0 +1,19 @@
+/* 모바일 최적화 스타일 */
+@media (max-width: 768px) {
+  .MuiContainer-root {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  .MuiPaper-root {
+    margin: 8px !important;
+  }
+}
+
+/* 터치 친화적 버튼 크기 */
+@media (max-width: 768px) {
+  .MuiButton-root {
+    min-height: 44px;
+  }
+}
+

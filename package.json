@@ -1,0 +1,23 @@
+{
+  "name": "safe-power-plant",
+  "version": "1.0.0",
+  "description": "발전소 안전 활동 기록 및 관리 시스템",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && nodemon index.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "start": "cd server && node index.js",
+    "start:prod": "cd server && NODE_ENV=production node index.js"
+  },
+  "keywords": ["safety", "power-plant", "management"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2"
+  }
+}
+
