@@ -1,6 +1,7 @@
 node_modules/
 client/node_modules/
 server/node_modules/
+mobile/node_modules/
 .env
 .env.local
 .env.production
@@ -11,6 +12,19 @@ build/
 client/build/
 server/database.db
 server/database.db-journal
+
+# Expo
+.expo/
+.expo-shared/
+mobile/.expo/
+mobile/dist/
+mobile/.expo-shared/
+mobile/.expo/
+mobile/web-build/
+mobile/.next/
+mobile/.env.local
+mobile/.env.production.local
+mobile/.env.development.local
 
 # Replit
 .replit
