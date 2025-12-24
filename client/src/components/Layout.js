@@ -22,6 +22,10 @@ import {
   BarChart as BarChartIcon,
   People as PeopleIcon,
   ExitToApp as ExitToAppIcon,
+  Business as BusinessIcon,
+  Description as DescriptionIcon,
+  UploadFile as UploadFileIcon,
+  Assignment as AssignmentIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import Logo from './Logo';
@@ -44,13 +48,17 @@ const Layout = ({ children }) => {
     { text: '대시보드', icon: <DashboardIcon />, path: '/', adminOnly: false },
     { text: '활동 기록', icon: <ListIcon />, path: '/activities', adminOnly: false },
     { text: '활동 추가', icon: <AddCircleIcon />, path: '/activity/new', adminOnly: false },
+    { text: '제출 서류', icon: <UploadFileIcon />, path: '/documents/submit', adminOnly: false },
   ];
 
   if (isAdmin) {
     menuItems.push(
       { text: '관리자 대시보드', icon: <BarChartIcon />, path: '/admin', adminOnly: true },
       { text: '통계', icon: <BarChartIcon />, path: '/admin/statistics', adminOnly: true },
-      { text: '사용자 관리', icon: <PeopleIcon />, path: '/admin/users', adminOnly: true }
+      { text: '사용자 관리', icon: <PeopleIcon />, path: '/admin/users', adminOnly: true },
+      { text: '사업소 관리', icon: <BusinessIcon />, path: '/admin/business-offices', adminOnly: true },
+      { text: '제출 요구사항', icon: <DescriptionIcon />, path: '/admin/document-requirements', adminOnly: true },
+      { text: '제출 현황', icon: <AssignmentIcon />, path: '/admin/document-submissions', adminOnly: true }
     );
   }
 

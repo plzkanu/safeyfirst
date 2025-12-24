@@ -12,6 +12,7 @@ build/
 client/build/
 server/database.db
 server/database.db-journal
+server/uploads/
 
 # Expo
 .expo/

@@ -36,7 +36,15 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "name": "SOOSAN 안전 관리 시스템",
+      "shortName": "SOOSAN Safe",
+      "lang": "ko",
+      "scope": "/",
+      "themeColor": "#ff8c00",
+      "backgroundColor": "#ffffff",
+      "display": "standalone",
+      "orientation": "portrait"
     },
     "plugins": [
       "expo-router",

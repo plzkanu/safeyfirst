@@ -27,6 +27,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 실제로는 AsyncStorage에서 토큰 확인
     const checkAuth = async () => {
       // Mock: 항상 로그아웃 상태로 시작
+      // 웹에서 새로고침 시 상태 초기화를 위해 약간의 지연 추가
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setUser(null); // 명시적으로 null로 설정
       setIsLoading(false);
     };
     checkAuth();

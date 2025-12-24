@@ -12,6 +12,10 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminStatistics from './pages/AdminStatistics';
 import AdminUsers from './pages/AdminUsers';
 import AdminActivities from './pages/AdminActivities';
+import AdminBusinessOffices from './pages/AdminBusinessOffices';
+import AdminDocumentRequirements from './pages/AdminDocumentRequirements';
+import AdminDocumentSubmissions from './pages/AdminDocumentSubmissions';
+import DocumentSubmission from './pages/DocumentSubmission';
 import './App.css';
 
 const theme = createTheme({
@@ -105,6 +109,38 @@ function App() {
               element={
                 <PrivateRoute requireAdmin>
                   <AdminActivities />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/business-offices"
+              element={
+                <PrivateRoute requireAdmin>
+                  <AdminBusinessOffices />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/document-requirements"
+              element={
+                <PrivateRoute requireAdmin>
+                  <AdminDocumentRequirements />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/document-submissions"
+              element={
+                <PrivateRoute requireAdmin>
+                  <AdminDocumentSubmissions />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/documents/submit"
+              element={
+                <PrivateRoute>
+                  <DocumentSubmission />
                 </PrivateRoute>
               }
             />

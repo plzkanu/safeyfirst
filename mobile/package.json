@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:web": "expo export:web",
+    "preview:web": "npx serve dist"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "autoprefixer": "^10.4.23",
     "react-test-renderer": "19.1.0",
     "typescript": "~5.9.2"
   },

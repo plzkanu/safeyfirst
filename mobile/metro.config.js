@@ -3,5 +3,9 @@ const { withNativeWind } = require('nativewind/metro');
 
 const config = getDefaultConfig(__dirname);
 
-module.exports = withNativeWind(config, { input: './global.css' });
+// NativeWind v4 웹 지원 설정
+module.exports = withNativeWind(config, { 
+  input: './global.css',
+  configPath: './tailwind.config.js'
+});
 

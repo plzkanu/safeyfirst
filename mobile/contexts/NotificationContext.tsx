@@ -10,7 +10,7 @@ interface NotificationContextType {
     urgency: UrgencyLevel;
     content: string;
     photos?: string[];
-  }) => void;
+  }) => Promise<void>;
   updateNotificationStatus: (id: string, status: NotificationStatus) => void;
   getRecentReports: (limit?: number) => NotificationItem[];
   getReportsByStatus: (status: NotificationStatus) => NotificationItem[];
@@ -76,23 +76,68 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const [notifications, setNotifications] = useState<NotificationItem[]>(generateInitialData());
 
   // 신고 추가
-  const addReport = useCallback((report: {
+  const addReport = useCallback(async (report: {
     title: string;
     riskType: RiskType;
     urgency: UrgencyLevel;
     content: string;
     photos?: string[];
   }) => {
-    const newNotification: NotificationItem = {
-      id: `notification-${Date.now()}`,
-      type: 'report',
-      status: 'pending',
-      title: report.title,
-      description: report.content,
-      date: new Date().toISOString(),
-    };
+    try {
+      // API 엔드포인트 설정 (환경 변수 또는 기본값)
+      const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000';
+      
+      // 사진 처리: 배열을 단일 경로로 변환하거나 첫 번째 사진만 사용
+      // photo_path는 한 번만 전달되도록 주의
+      const photo_path = report.photos && report.photos.length > 0 
+        ? report.photos[0] // 첫 번째 사진만 사용하거나, 필요시 콤마로 구분된 문자열로 변환
+        : null;
 
-    setNotifications((prev) => [newNotification, ...prev]);
+      // API 요청 데이터 준비 - photo_path만 전달 (photos 배열과 중복되지 않도록)
+      const requestData: any = {
+        title: report.title,
+        risk_type: report.riskType,
+        urgency: report.urgency,
+        content: report.content,
+      };
+
+      // photo_path가 있을 때만 추가 (중복 방지)
+      if (photo_path) {
+        requestData.photo_path = photo_path;
+      }
+
+      // API 호출
+      const response = await fetch(`${API_URL}/api/reports`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || '신고 등록 중 오류가 발생했습니다.');
+      }
+
+      const result = await response.json();
+
+      // 성공 시 로컬 상태에도 추가
+      const newNotification: NotificationItem = {
+        id: result.id || `notification-${Date.now()}`,
+        type: 'report',
+        status: 'pending',
+        title: report.title,
+        description: report.content,
+        date: new Date().toISOString(),
+      };
+
+      setNotifications((prev) => [newNotification, ...prev]);
+    } catch (error: any) {
+      // 에러 발생 시 사용자에게 알림
+      console.error('신고 등록 오류:', error);
+      throw error; // 호출하는 쪽에서 에러 처리할 수 있도록 throw
+    }
   }, []);
 
   // 알림 상태 업데이트

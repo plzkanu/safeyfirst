@@ -52,6 +52,35 @@ export default function ReportScreen() {
       return;
     }
 
+    // 웹 플랫폼 처리
+    if (Platform.OS === 'web') {
+      try {
+        const input = (typeof document !== 'undefined' && document.createElement('input')) as HTMLInputElement | null;
+        if (!input) return;
+        
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.multiple = false;
+        input.onchange = (e: any) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const dataUrl = event.target?.result as string;
+              if (dataUrl) {
+                setPhotos((prev) => [...prev, dataUrl].slice(0, MAX_PHOTOS));
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+        input.click();
+      } catch (error) {
+        Alert.alert('오류', '파일 선택 중 오류가 발생했습니다.');
+      }
+      return;
+    }
+
     // 권한 확인
     const hasPermission = await requestPermissions();
     if (!hasPermission) return;
@@ -138,23 +167,30 @@ export default function ReportScreen() {
         { text: '취소', style: 'cancel' },
         {
           text: '제출',
-          onPress: () => {
-            // Context에 신고 추가
-            addReport({
-              title: title.trim(),
-              riskType: riskType!,
-              urgency: urgency!,
-              content: content.trim(),
-              photos: photos.length > 0 ? photos : undefined,
-            });
+          onPress: async () => {
+            try {
+              // Context에 신고 추가 (API 호출 포함)
+              await addReport({
+                title: title.trim(),
+                riskType: riskType!,
+                urgency: urgency!,
+                content: content.trim(),
+                photos: photos.length > 0 ? photos : undefined,
+              });
 
-            Alert.alert('제출 완료', '신고가 성공적으로 제출되었습니다.');
-            // 제출 후 초기화
-            setTitle('');
-            setRiskType(null);
-            setContent('');
-            setUrgency(null);
-            setPhotos([]);
+              Alert.alert('제출 완료', '신고가 성공적으로 제출되었습니다.');
+              // 제출 후 초기화
+              setTitle('');
+              setRiskType(null);
+              setContent('');
+              setUrgency(null);
+              setPhotos([]);
+            } catch (error: any) {
+              Alert.alert(
+                '제출 실패',
+                error.message || '신고 등록 중 오류가 발생했습니다.'
+              );
+            }
           },
         },
       ]
